@@ -112,7 +112,8 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
 .replay span{border:1px solid var(--gold);color:var(--gold);padding:12px 18px;border-radius:24px;background:rgba(0,0,0,.4)}
 .quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:-8px}
 .qb{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:12px;color:#fff;text-decoration:none;font:600 15px var(--body)}
-.qb b{font:700 15px var(--body)}.qli{background:var(--li)}.qwa{background:var(--wa)}
+.qb b{font:700 15px var(--body)}.qli{background:var(--li)}.qwa{background:var(--wa)}.qig{background:linear-gradient(120deg,#f58529,#dd2a7b 50%,#8134af)}.qrd{background:linear-gradient(120deg,#e3c07a,#b8893e);color:#1b1406}
+.conn .moved{display:none!important}
 </style>
 
 <div class="wrap">
@@ -129,7 +130,7 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
   </div></div>
   <p class="hint">Flip to show my QR to a friend</p>
   <a class="save" id="save" href="contact.vcf" download>Save to my contacts</a>
-  <div class="quick"><a class="qb qli" id="qLi" target="_blank" rel="noopener"><b>in</b> LinkedIn</a><a class="qb qwa" id="qWa" target="_blank" rel="noopener"><b>✆</b> WhatsApp</a></div>
+  <div class="quick"><a class="qb qwa" id="qWa" target="_blank" rel="noopener"><b>✆</b> WhatsApp</a><a class="qb qli" id="qLi" target="_blank" rel="noopener"><b>in</b> LinkedIn</a><a class="qb qig" id="qIg" target="_blank" rel="noopener"><b>◎</b> Instagram</a><a class="qb qrd" id="qRd" target="_blank" rel="noopener"><b>✦</b> My articles</a></div>
 
   <section id="secVid" hidden>
     <h4>Me, in 30 seconds</h4>
@@ -153,10 +154,10 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
 
   <h4>Let's stay connected</h4>
   <div class="conn" id="conn">
-    <a class="cb wa" id="aWa" target="_blank" rel="noopener"><span class="ic">✆</span><div><b>WhatsApp</b><small>Say hi, it opens with a ready message</small></div></a>
-    <a class="cb li" id="aLi" target="_blank" rel="noopener"><span class="ic">in</span><div><b>Connect on LinkedIn</b><small id="liSub"></small></div></a>
-    <a class="cb rd" id="aRead" target="_blank" rel="noopener"><span class="ic">✦</span><div><b>Read my articles</b><small id="rdSub"></small></div></a>
-    <a class="cb ig" id="aIg" target="_blank" rel="noopener"><span class="ic">◎</span><div><b>Follow on Instagram</b><small id="igSub"></small></div></a>
+    <a class="cb wa moved" id="aWa" target="_blank" rel="noopener"><span class="ic">✆</span><div><b>WhatsApp</b><small>Say hi, it opens with a ready message</small></div></a>
+    <a class="cb li moved" id="aLi" target="_blank" rel="noopener"><span class="ic">in</span><div><b>Connect on LinkedIn</b><small id="liSub"></small></div></a>
+    <a class="cb rd moved" id="aRead" target="_blank" rel="noopener"><span class="ic">✦</span><div><b>Read my articles</b><small id="rdSub"></small></div></a>
+    <a class="cb ig moved" id="aIg" target="_blank" rel="noopener"><span class="ic">◎</span><div><b>Follow on Instagram</b><small id="igSub"></small></div></a>
     <a class="cb fm" id="aForm" target="_blank" rel="noopener"><span class="ic">✎</span><div><b>No WhatsApp? Share your details</b><small>Only used to stay in touch. Never shared.</small></div></a>
   </div>
   <div class="share2" style="margin-top:2px"><button class="sh" id="shareBtn" type="button">↗ Share this card</button><a class="sh" id="shareWa" target="_blank" rel="noopener">✆ Send on WhatsApp</a></div>
@@ -205,7 +206,9 @@ else if(digits){ /* no form yet: fall back to a normal text message with the sam
 const site=CARD.website?(/^https?:/.test(CARD.website)?CARD.website:"https://"+CARD.website):"";
 const reads=CARD.articles_link||site;
 if(reads){$("aRead").href=reads; $("rdSub").textContent=(CARD.website||"").replace(/^https?:\/\//,"")+" · money habits & the mind behind them";} else $("aRead").hidden=true;
-if(!digits){$("aWa").hidden=true;}
+$("qIg").href=$("aIg").href||""; if(!CARD.instagram)$("qIg").hidden=true;
+if(reads)$("qRd").href=reads; else $("qRd").hidden=true;
+if(!digits){$("aWa").hidden=true;$("qWa").hidden=true;}
 /* share this card with someone else */
 const pageUrl=location.href.split("#")[0].split("?")[0];
 const shareText="Sharing "+full+"'s contact card"+(CARD.tagline?" ("+CARD.tagline+")":"")+". Tap to save the number and connect:";
