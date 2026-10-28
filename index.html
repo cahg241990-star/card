@@ -101,6 +101,8 @@ h4{font:500 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#0f1a33;padding:10px 16px;border-radius:10px;font-size:13.5px;box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
 a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 @media (prefers-reduced-motion:reduce){.stage,.stamp{animation:none}.card{transition:none}}
+.share2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:-6px}
+.sh{display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--gold);background:transparent;color:var(--gold);border-radius:12px;padding:12px 6px;font:600 14px var(--body);cursor:pointer;text-decoration:none}
 </style>
 
 <div class="wrap">
@@ -135,6 +137,7 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
   </section>
 
   <a class="save" id="save" href="contact.vcf" download>Save to my contacts</a>
+  <div class="share2"><button class="sh" id="shareBtn" type="button">↗ Share this card</button><a class="sh" id="shareWa" target="_blank" rel="noopener">✆ Send on WhatsApp</a></div>
 
   <h4>Let's stay connected</h4>
   <div class="conn" id="conn">
@@ -151,7 +154,7 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-const CARD = /*CARD_DATA_START*/{"first": "Himanshu", "last": "Gulati", "title": "Chartered Accountant", "eyebrow": "Mind · Money · Life", "tagline": "Chartered Accountant · Exploring the psychology of money", "phone": "+91 75030 56205", "whatsapp": "", "email": "cahg241990@gmail.com", "website": "mindmoneylife.com", "linkedin": "https://www.linkedin.com/in/himanshu-gulati1990", "instagram": "mind_money_life", "city": "Gurugram · India", "theme": "midnight", "video": "", "video_words": "Fourteen years as a Chartered Accountant taught me one thing: money is rarely a maths problem. It's a mind problem. I'm Himanshu. So now I'm studying psychology, and building my own AI tools on the side. If you love talking about ideas, AI, or why we think the way we think, we're going to get along. Save my number, say hi on WhatsApp, and let's keep this conversation going.", "wa_message": "Hi Himanshu! Great meeting you today. Saving your number — please save mine too. I'm ", "form_link": "", "articles_link": "", "photo": "", "live": true, "qa": [["Who is Himanshu, really?", "By day, a Chartered Accountant who's spent 14 years inside numbers. After hours, the guy asking why people do what they do with money.\n\nI'm hooked on how minds make decisions, and how AI is quietly rewriting how we work. If you like a good \"what if\" conversation, we'll get along."], ["Wait, a CA studying psychology?", "I kept seeing smart people make the same money mistakes. The numbers were fine; the decisions weren't. So I'm doing an MA in Psychology to understand why, and I write about what I learn."], ["What's he building with AI?", "Small AI tools for my own learning: one to study Indian companies, and one that turns YouTube talks into notes. Still learning, and loving it."], ["One money rule he lives by?", "I try to make money decisions when calm, never when excited or stressed. I write my rules down on a good day, so a bad day can't rewrite them."], ["Plot twist?", "This card? I built it myself with AI. Ask me how, I love talking about it."]]}/*CARD_DATA_END*/;
+const CARD = /*CARD_DATA_START*/{"first": "Himanshu", "last": "Gulati", "title": "Chartered Accountant", "eyebrow": "Mind · Money · Life", "tagline": "Chartered Accountant · Exploring the psychology of money", "phone": "+91 75030 56205", "whatsapp": "", "email": "cahg241990@gmail.com", "website": "mindmoneylife.com", "linkedin": "https://www.linkedin.com/in/himanshu-gulati1990", "instagram": "mind_money_life", "city": "Gurugram · India", "theme": "midnight", "video": "", "video_words": "You know what fourteen years as a CA taught me? Money is rarely a maths problem. It's a mind problem. I'm Himanshu. By day, I work on financial reporting and audits for global businesses, making sure the numbers tell the truth. And after the day? I'm studying psychology, and building my own little AI tools on the side. So if you love talking about ideas, AI, or why we think the way we think, we're going to get along just fine. Save my number, say hi on WhatsApp, and let's keep this conversation going.", "wa_message": "Hi Himanshu! Great meeting you today. Saving your number — please save mine too. I'm ", "form_link": "", "articles_link": "", "photo": "photo.jpg", "live": true, "qa": [["Who is Himanshu, really?", "By day, a Chartered Accountant who's spent 14 years inside numbers. After hours, the guy asking why people do what they do with money.\n\nI'm hooked on how minds make decisions, and how AI is quietly rewriting how we work. If you like a good \"what if\" conversation, we'll get along."], ["Wait, a CA studying psychology?", "I kept seeing smart people make the same money mistakes. The numbers were fine; the decisions weren't. So I'm doing an MA in Psychology to understand why, and I write about what I learn."], ["What's he building with AI?", "Small AI tools for my own learning: one to study Indian companies, and one that turns YouTube talks into notes. Still learning, and loving it."], ["One money rule he lives by?", "I try to make money decisions when calm, never when excited or stressed. I write my rules down on a good day, so a bad day can't rewrite them."], ["Plot twist?", "This card? I built it myself with AI. Ask me how, I love talking about it."]]}/*CARD_DATA_END*/;
 
 const $=id=>document.getElementById(id);
 const full=(CARD.first+" "+CARD.last).trim();
@@ -163,7 +166,7 @@ function vcard(c){
   if(c.phone)L.push("TEL;TYPE=CELL:"+c.phone.replace(/[^\d+]/g,""));
   if(c.email)L.push("EMAIL;TYPE=INTERNET:"+c.email);
   if(c.website)L.push("URL:"+(/^https?:/.test(c.website)?c.website:"https://"+c.website));
-  if(c.linkedin)L.push("X-SOCIALPROFILE;TYPE=linkedin:"+c.linkedin);
+  if(c.linkedin)L.push("item1.URL:"+c.linkedin,"item1.X-ABLabel:LinkedIn","X-SOCIALPROFILE;TYPE=linkedin:"+c.linkedin);
   L.push("END:VCARD");return L.join("\r\n");
 }
 /* text */
@@ -188,6 +191,13 @@ const site=CARD.website?(/^https?:/.test(CARD.website)?CARD.website:"https://"+C
 const reads=CARD.articles_link||site;
 if(reads){$("aRead").href=reads; $("rdSub").textContent=(CARD.website||"").replace(/^https?:\/\//,"")+" · money habits & the mind behind them";} else $("aRead").hidden=true;
 if(!digits){$("aWa").hidden=true;}
+/* share this card with someone else */
+const pageUrl=location.href.split("#")[0].split("?")[0];
+const shareText="Sharing "+full+"'s contact card"+(CARD.tagline?" ("+CARD.tagline+")":"")+". Tap to save the number and connect:";
+$("shareWa").href="https://wa.me/?text="+encodeURIComponent(shareText+"\n"+pageUrl);
+$("shareBtn").addEventListener("click",()=>{
+  if(navigator.share){navigator.share({title:full,text:shareText,url:pageUrl}).catch(()=>{})}
+  else copy(pageUrl,"Card link copied. Paste it anywhere to share.")});
 function toast(t){const e=$("toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,2400)}
 function copy(v,m){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(()=>toast(m),()=>toast(v));else toast(v)}
 /* contact QR on the back */
