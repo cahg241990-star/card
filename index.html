@@ -110,6 +110,9 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(214,174,99,.6)}50%{box-shadow:0 0 0 8px rgba(214,174,99,0)}}
 .replay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(5,7,15,.55);border:0;color:#fff;font:700 18px var(--body);cursor:pointer}
 .replay span{border:1px solid var(--gold);color:var(--gold);padding:12px 18px;border-radius:24px;background:rgba(0,0,0,.4)}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:-8px}
+.qb{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:12px;color:#fff;text-decoration:none;font:600 15px var(--body)}
+.qb b{font:700 15px var(--body)}.qli{background:var(--li)}.qwa{background:var(--wa)}
 </style>
 
 <div class="wrap">
@@ -125,11 +128,13 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
         <div><h3>Scan to save my number</h3><p>Works even without internet. Name, number and email go straight into contacts.</p></div></div></div>
   </div></div>
   <p class="hint">Flip to show my QR to a friend</p>
+  <a class="save" id="save" href="contact.vcf" download>Save to my contacts</a>
+  <div class="quick"><a class="qb qli" id="qLi" target="_blank" rel="noopener"><b>in</b> LinkedIn</a><a class="qb qwa" id="qWa" target="_blank" rel="noopener"><b>✆</b> WhatsApp</a></div>
 
   <section id="secVid" hidden>
     <h4>Me, in 30 seconds</h4>
     <div class="vid" style="margin-top:14px">
-      <video id="hv" muted playsinline autoplay preload="auto"></video>
+      <video id="hv" muted playsinline preload="auto"></video>
       <button class="snd" id="snd" type="button">🔇 Tap for sound</button>
       <div class="sub" id="sub"></div>
       <button class="replay" id="replay" type="button" hidden><span>↻ Watch again</span></button>
@@ -145,8 +150,6 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
     <div class="chat" id="chat"></div>
   </section>
 
-  <a class="save" id="save" href="contact.vcf" download>Save to my contacts</a>
-  <div class="share2"><button class="sh" id="shareBtn" type="button">↗ Share this card</button><a class="sh" id="shareWa" target="_blank" rel="noopener">✆ Send on WhatsApp</a></div>
 
   <h4>Let's stay connected</h4>
   <div class="conn" id="conn">
@@ -156,6 +159,7 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
     <a class="cb ig" id="aIg" target="_blank" rel="noopener"><span class="ic">◎</span><div><b>Follow on Instagram</b><small id="igSub"></small></div></a>
     <a class="cb fm" id="aForm" target="_blank" rel="noopener"><span class="ic">✎</span><div><b>No WhatsApp? Share your details</b><small>Only used to stay in touch. Never shared.</small></div></a>
   </div>
+  <div class="share2" style="margin-top:2px"><button class="sh" id="shareBtn" type="button">↗ Share this card</button><a class="sh" id="shareWa" target="_blank" rel="noopener">✆ Send on WhatsApp</a></div>
 
   <p class="foot" id="foot"></p>
 </div>
@@ -163,7 +167,7 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-const CARD = /*CARD_DATA_START*/{"first": "Himanshu", "last": "Gulati", "title": "Chartered Accountant", "eyebrow": "Mind · Money · Life", "tagline": "Chartered Accountant · Exploring the psychology of money", "phone": "+91 75030 56205", "whatsapp": "", "email": "cahg241990@gmail.com", "website": "mindmoneylife.com", "linkedin": "https://www.linkedin.com/in/himanshu-gulati1990", "instagram": "mind_money_life", "city": "Gurugram · India", "theme": "midnight", "video": "hello.mp4", "video_words": "", "wa_message": "Hi Himanshu! Great meeting you today. Saving your number — please save mine too. I'm ", "form_link": "", "articles_link": "", "photo": "photo.jpg", "live": true, "qa": [["Who is Himanshu, really?", "By day, a Chartered Accountant who's spent 14 years inside numbers. After hours, the guy asking why people do what they do with money.\n\nI'm hooked on how minds make decisions, and how AI is quietly rewriting how we work. If you like a good \"what if\" conversation, we'll get along."], ["Wait, a CA studying psychology?", "I kept seeing smart people make the same money mistakes. The numbers were fine; the decisions weren't. So I'm doing an MA in Psychology to understand why, and I write about what I learn."], ["What's he building with AI?", "Small AI tools for my own learning: one to study Indian companies, and one that turns YouTube talks into notes. Still learning, and loving it."], ["One money rule he lives by?", "I try to make money decisions when calm, never when excited or stressed. I write my rules down on a good day, so a bad day can't rewrite them."], ["Plot twist?", "This card? I built it myself with AI. Ask me how, I love talking about it."]]}/*CARD_DATA_END*/;
+const CARD = /*CARD_DATA_START*/{"first": "Himanshu", "last": "Gulati", "title": "Chartered Accountant", "eyebrow": "Mind · Money · Life", "tagline": "Chartered Accountant · Exploring the psychology of money", "phone": "+91 75030 56205", "whatsapp": "", "email": "cahg241990@gmail.com", "website": "mindmoneylife.com", "linkedin": "https://www.linkedin.com/in/himanshu-gulati1990", "instagram": "mind_money_life", "city": "Gurugram · India", "theme": "midnight", "video": "hello.mp4", "video_words": "", "wa_message": "Hi Himanshu! Great meeting you today. This is my number — I'm ", "form_link": "", "articles_link": "", "photo": "photo.jpg", "live": true, "qa": [["Who are you, really?", "A Chartered Accountant who works with numbers by day and explores human decisions after hours.\n\nI'm curious about why people make the money choices they do, and how AI is changing the way we work."], ["Wait, a CA studying psychology?", "I kept seeing smart people make money decisions that didn't match the numbers. I wanted to understand the human side of those choices, so I'm studying for an MA in Psychology and writing about what I learn."], ["What are you building with AI?", "Small AI tools for my own learning: one to help me study Indian companies, another to turn YouTube talks into notes. They're personal experiments, and I'm still learning as I build."], ["One money rule you live by?", "I try not to make money decisions when I'm excited or stressed. I write my rules down when I'm calm, so a bad day doesn't rewrite them."], ["Plot twist?", "I built this card myself with AI. The design, the video and the little details were all part of the experiment. Ask me how I made it."]]}/*CARD_DATA_END*/;
 
 const $=id=>document.getElementById(id);
 const full=(CARD.first+" "+CARD.last).trim();
@@ -188,6 +192,8 @@ $("save").setAttribute("download",full.replace(/[^\w]+/g,"_")+".vcf");
 const waBase="https://wa.me/"+digits;
 $("aWa").href=waBase+"?text="+encodeURIComponent(CARD.wa_message||"Hi!");
 if(CARD.linkedin){$("aLi").href=CARD.linkedin; $("liSub").textContent=full+" · "+CARD.title;} else $("aLi").hidden=true;
+if(CARD.linkedin)$("qLi").href=CARD.linkedin; else $("qLi").hidden=true;
+$("qWa").href=$("aWa").href;
 if(CARD.instagram){$("aIg").href="https://instagram.com/"+CARD.instagram.replace(/^@/,""); $("igSub").textContent="@"+CARD.instagram.replace(/^@/,"");} else $("aIg").hidden=true;
 if(CARD.form_link){$("aForm").href=CARD.form_link;}
 else if(digits){ /* no form yet: fall back to a normal text message with the same ready message */
@@ -233,7 +239,8 @@ if(CARD.video){
   v.addEventListener("click",()=>$("vplay").click());
   $("replay").addEventListener("click",()=>{ v.currentTime=0; $("replay").hidden=true; userPaused=false; go(); });
   /* starts by itself: with sound if the phone allows it, otherwise silently (phones block sound until a tap) */
-  v.muted=false; go();
+  const calm=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(calm){userPaused=true; ui();} else { v.muted=false; go(); }
   /* pauses when scrolled out of view, resumes when back (unless paused by hand) */
   if("IntersectionObserver" in window)new IntersectionObserver(es=>es.forEach(e=>{
     if(!e.isIntersecting&&!v.paused){v.pause();} else if(e.isIntersecting&&v.paused&&!userPaused&&!v.ended){go();} }),{threshold:.35}).observe(v);
@@ -251,7 +258,7 @@ if(CARD.qa&&CARD.qa.length){ $("secAsk").hidden=false;
     $("chips").appendChild(c);});
 }
 /* preview vs live */
-if(CARD.live){$("badge").hidden=true;$("foot").textContent=full;}
+if(CARD.live){$("badge").hidden=true;$("foot").textContent=full+" · Personal card · Not an offer of professional services";}
 else{$("foot").textContent="Preview with sample details";
   $("save").addEventListener("click",e=>{e.preventDefault();$("card").classList.add("flipped");window.scrollTo({top:0,behavior:"smooth"});toast("On the live card this saves the contact in one tap. Here, scan the QR.")});}
 /* flip + tilt */
