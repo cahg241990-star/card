@@ -103,6 +103,13 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
 @media (prefers-reduced-motion:reduce){.stage,.stamp{animation:none}.card{transition:none}}
 .share2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:-6px}
 .sh{display:flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--gold);background:transparent;color:var(--gold);border-radius:12px;padding:12px 6px;font:600 14px var(--body);cursor:pointer;text-decoration:none}
+.vbar{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:10px;padding:10px 12px 12px;background:linear-gradient(transparent,rgba(0,0,0,.55))}
+.vbtn{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:rgba(0,0,0,.45);color:#fff;font:600 17px var(--body);display:grid;place-items:center;cursor:pointer;flex:none}
+.vprog{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.25);overflow:hidden}.vprog i{display:block;height:100%;width:0;background:var(--gold)}
+.snd{animation:pulse 1.8s ease-in-out infinite}.snd.on{animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(214,174,99,.6)}50%{box-shadow:0 0 0 8px rgba(214,174,99,0)}}
+.replay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(5,7,15,.55);border:0;color:#fff;font:700 18px var(--body);cursor:pointer}
+.replay span{border:1px solid var(--gold);color:var(--gold);padding:12px 18px;border-radius:24px;background:rgba(0,0,0,.4)}
 </style>
 
 <div class="wrap">
@@ -120,11 +127,13 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
   <p class="hint">Flip to show my QR to a friend</p>
 
   <section id="secVid" hidden>
-    <h4>A hello from me</h4>
+    <h4>Me, in 30 seconds</h4>
     <div class="vid" style="margin-top:14px">
       <video id="hv" muted playsinline autoplay preload="auto"></video>
       <button class="snd" id="snd" type="button">🔇 Tap for sound</button>
       <div class="sub" id="sub"></div>
+      <button class="replay" id="replay" type="button" hidden><span>↻ Watch again</span></button>
+      <div class="vbar"><button class="vbtn" id="vplay" type="button" aria-label="Pause">❚❚</button><div class="vprog"><i id="vprog"></i></div><button class="vbtn" id="vmute" type="button" aria-label="Sound on">🔇</button></div>
     </div>
   </section>
 
@@ -154,7 +163,7 @@ a:focus-visible,.chip:focus-visible,.card:focus-visible,.snd:focus-visible,.copy
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-const CARD = /*CARD_DATA_START*/{"first": "Himanshu", "last": "Gulati", "title": "Chartered Accountant", "eyebrow": "Mind · Money · Life", "tagline": "Chartered Accountant · Exploring the psychology of money", "phone": "+91 75030 56205", "whatsapp": "", "email": "cahg241990@gmail.com", "website": "mindmoneylife.com", "linkedin": "https://www.linkedin.com/in/himanshu-gulati1990", "instagram": "mind_money_life", "city": "Gurugram · India", "theme": "midnight", "video": "", "video_words": "You know what fourteen years as a CA taught me? Money is rarely a maths problem. It's a mind problem. I'm Himanshu. By day, I work on financial reporting and audits for global businesses, making sure the numbers tell the truth. And after the day? I'm studying psychology, and building my own little AI tools on the side. So if you love talking about ideas, AI, or why we think the way we think, we're going to get along just fine. Save my number, say hi on WhatsApp, and let's keep this conversation going.", "wa_message": "Hi Himanshu! Great meeting you today. Saving your number — please save mine too. I'm ", "form_link": "", "articles_link": "", "photo": "photo.jpg", "live": true, "qa": [["Who is Himanshu, really?", "By day, a Chartered Accountant who's spent 14 years inside numbers. After hours, the guy asking why people do what they do with money.\n\nI'm hooked on how minds make decisions, and how AI is quietly rewriting how we work. If you like a good \"what if\" conversation, we'll get along."], ["Wait, a CA studying psychology?", "I kept seeing smart people make the same money mistakes. The numbers were fine; the decisions weren't. So I'm doing an MA in Psychology to understand why, and I write about what I learn."], ["What's he building with AI?", "Small AI tools for my own learning: one to study Indian companies, and one that turns YouTube talks into notes. Still learning, and loving it."], ["One money rule he lives by?", "I try to make money decisions when calm, never when excited or stressed. I write my rules down on a good day, so a bad day can't rewrite them."], ["Plot twist?", "This card? I built it myself with AI. Ask me how, I love talking about it."]]}/*CARD_DATA_END*/;
+const CARD = /*CARD_DATA_START*/{"first": "Himanshu", "last": "Gulati", "title": "Chartered Accountant", "eyebrow": "Mind · Money · Life", "tagline": "Chartered Accountant · Exploring the psychology of money", "phone": "+91 75030 56205", "whatsapp": "", "email": "cahg241990@gmail.com", "website": "mindmoneylife.com", "linkedin": "https://www.linkedin.com/in/himanshu-gulati1990", "instagram": "mind_money_life", "city": "Gurugram · India", "theme": "midnight", "video": "hello.mp4", "video_words": "", "wa_message": "Hi Himanshu! Great meeting you today. Saving your number — please save mine too. I'm ", "form_link": "", "articles_link": "", "photo": "photo.jpg", "live": true, "qa": [["Who is Himanshu, really?", "By day, a Chartered Accountant who's spent 14 years inside numbers. After hours, the guy asking why people do what they do with money.\n\nI'm hooked on how minds make decisions, and how AI is quietly rewriting how we work. If you like a good \"what if\" conversation, we'll get along."], ["Wait, a CA studying psychology?", "I kept seeing smart people make the same money mistakes. The numbers were fine; the decisions weren't. So I'm doing an MA in Psychology to understand why, and I write about what I learn."], ["What's he building with AI?", "Small AI tools for my own learning: one to study Indian companies, and one that turns YouTube talks into notes. Still learning, and loving it."], ["One money rule he lives by?", "I try to make money decisions when calm, never when excited or stressed. I write my rules down on a good day, so a bad day can't rewrite them."], ["Plot twist?", "This card? I built it myself with AI. Ask me how, I love talking about it."]]}/*CARD_DATA_END*/;
 
 const $=id=>document.getElementById(id);
 const full=(CARD.first+" "+CARD.last).trim();
@@ -207,16 +216,31 @@ if(CARD.video){
   $("secVid").hidden=false; const v=$("hv"); v.src=CARD.video;
   const words=(CARD.video_words||"").split(/\s+/).filter(Boolean), chunks=[];
   for(let i=0;i<words.length;i+=6)chunks.push(words.slice(i,i+6).join(" "));
-  v.addEventListener("timeupdate",()=>{ if(!chunks.length||!v.duration)return;
+  let userPaused=false;
+  const ui=()=>{ $("vplay").textContent=v.paused?"▶":"❚❚"; $("vplay").setAttribute("aria-label",v.paused?"Play":"Pause");
+    $("vmute").textContent=v.muted?"🔇":"🔊"; $("vmute").setAttribute("aria-label",v.muted?"Sound on":"Mute");
+    $("snd").hidden=!v.muted||v.ended; };
+  const go=()=>v.play().then(ui).catch(()=>{ if(!v.muted){v.muted=true; v.play().then(ui).catch(ui);} else ui(); });
+  const soundOn=()=>{ v.muted=false; if(v.ended)v.currentTime=0; $("replay").hidden=true; userPaused=false; go(); $("sub").textContent=""; };
+  v.addEventListener("timeupdate",()=>{ if(v.duration)$("vprog").style.width=(v.currentTime/v.duration*100)+"%";
+    if(!chunks.length||!v.duration)return;
     const k=Math.min(chunks.length-1,Math.floor(v.currentTime/v.duration*chunks.length)); $("sub").textContent=v.muted?chunks[k]:""; });
-  v.addEventListener("ended",()=>{$("sub").textContent="";$("snd").textContent="↻ Watch again with sound";});
-  $("snd").addEventListener("click",()=>{ if(v.ended||v.muted){v.muted=false; if(v.ended)v.currentTime=0; v.play().catch(()=>{}); $("snd").classList.add("on"); $("snd").textContent="🔊 Sound on"; $("sub").textContent="";}
-    else {v.muted=true; $("snd").classList.remove("on"); $("snd").textContent="🔇 Tap for sound";}});
-  v.play&&v.play().catch(()=>{});
+  ["play","pause","volumechange"].forEach(e=>v.addEventListener(e,ui));
+  v.addEventListener("ended",()=>{ $("sub").textContent=""; $("replay").hidden=false; ui(); });
+  $("snd").addEventListener("click",soundOn);
+  $("vmute").addEventListener("click",()=>{ if(v.muted)soundOn(); else { v.muted=true; ui(); } });
+  $("vplay").addEventListener("click",()=>{ if(v.paused){ userPaused=false; if(v.ended)v.currentTime=0; $("replay").hidden=true; go(); } else { userPaused=true; v.pause(); } });
+  v.addEventListener("click",()=>$("vplay").click());
+  $("replay").addEventListener("click",()=>{ v.currentTime=0; $("replay").hidden=true; userPaused=false; go(); });
+  /* starts by itself: with sound if the phone allows it, otherwise silently (phones block sound until a tap) */
+  v.muted=false; go();
+  /* pauses when scrolled out of view, resumes when back (unless paused by hand) */
+  if("IntersectionObserver" in window)new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting&&!v.paused){v.pause();} else if(e.isIntersecting&&v.paused&&!userPaused&&!v.ended){go();} }),{threshold:.35}).observe(v);
 }
 /* photo */
 if(CARD.photo){$("me").hidden=false;$("photo").src=CARD.photo;$("photo").alt=full;$("meName").textContent="Hi, I'm "+CARD.first;
-  if(CARD.video)$("hv").poster=CARD.photo;}
+}
 /* questions */
 if(CARD.qa&&CARD.qa.length){ $("secAsk").hidden=false;
   CARD.qa.forEach(([q,a],i)=>{const c=document.createElement("button");c.type="button";c.className="chip";c.textContent=q;
